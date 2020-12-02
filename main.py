@@ -16,6 +16,9 @@ if __name__ == '__main__':
         letter = match[3]
         password = match[4]
 
-        if min <= password.count(letter) <= max:
+        if password[min - 1] == letter and password[max - 1] != letter:
             count += 1
+        elif password[max - 1] == letter and password[min - 1] != letter:
+            count += 1
+
     print(count)
