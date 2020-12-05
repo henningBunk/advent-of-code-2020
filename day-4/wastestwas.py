@@ -2,6 +2,12 @@ from main import read_passports
 from main import find_field
 from main import is_valid
 from main import is_byr_valid
+from main import is_iyr_valid
+from main import is_eyr_valid
+from main import is_hgt_valid
+from main import is_hcl_valid
+from main import is_ecl_valid
+from main import is_pid_valid
 
 
 def test_find_field_ecl_returns_gry_for_given_data():
@@ -170,15 +176,202 @@ def test_the_second_passport_is_invalid():
     assert is_valid(passports[1]) is False
 
 
-def test_the_third_passport_is_invalid():
+def test_the_third_passport_is_valid_because_we_ignore_cid():
     passports = read_passports(sample_input)
-    assert is_valid(passports[2]) is False
+    assert is_valid(passports[2]) is True
 
 
-def test_the_fourth_passport_is_valid():
+def test_the_fourth_passport_is_invalid():
     passports = read_passports(sample_input)
-    assert is_valid(passports[3]) is True
+    assert is_valid(passports[3]) is False
 
 
 ### PART TWO
 
+# byr
+def test_byr_1919_is_invalid():
+    assert is_byr_valid("1919") is False
+
+
+def test_byr_2003_is_invalid():
+    assert is_byr_valid("2003") is False
+
+
+def test_byr_2002_isvalid():
+    assert is_byr_valid("2002") is True
+
+
+def test_byr_1920_isvalid():
+    assert is_byr_valid("1920") is True
+
+# iyr
+def test_iyr_2009_is_invalid():
+    assert is_iyr_valid("2009") is False
+
+
+def test_iyr_2021_is_invalid():
+    assert is_iyr_valid("2021") is False
+
+
+def test_iyr_2010_isvalid():
+    assert is_iyr_valid("2010") is True
+
+
+def test_iyr_2020_isvalid():
+    assert is_iyr_valid("2020") is True
+
+# eyr
+def test_eyr_2019_is_invalid():
+    assert is_eyr_valid("2019") is False
+
+
+def test_eyr_2031_is_invalid():
+    assert is_eyr_valid("2031") is False
+
+
+def test_eyr_2020_isvalid():
+    assert is_eyr_valid("2020") is True
+
+
+def test_eyr_2030_isvalid():
+    assert is_eyr_valid("2030") is True
+
+# hgt
+def test_hgt_60in_is_valid():
+    assert is_hgt_valid("60in") is True
+
+
+def test_hgt_190cm_is_valid():
+    assert is_hgt_valid("190cm") is True
+
+
+def test_hgt_190in_is_invalid():
+    assert is_hgt_valid("190in") is False
+
+
+def test_hgt_190_is_invalid():
+    assert is_hgt_valid("190") is False
+
+
+def test_hgt_cm_is_invalid():
+    assert is_hgt_valid("cm") is False
+
+
+def test_hgt_190meters_is_invalid():
+    assert is_hgt_valid("190meters") is False
+
+
+def test_hgt_149cm_is_invalid():
+    assert is_hgt_valid("149cm") is False
+
+
+def test_hgt_194cm_is_invalid():
+    assert is_hgt_valid("194cm") is False
+
+
+def test_hgt_150cm_is_valid():
+    assert is_hgt_valid("150cm") is True
+
+
+def test_hgt_193cm_is_valid():
+    assert is_hgt_valid("193cm") is True
+
+
+def test_hgt_58in_is_invalid():
+    assert is_hgt_valid("58in") is False
+
+
+def test_hgt_77in_is_invalid():
+    assert is_hgt_valid("77in") is False
+
+
+def test_hgt_59in_is_valid():
+    assert is_hgt_valid("59in") is True
+
+
+def test_hgt_76in_is_valid():
+    assert is_hgt_valid("76in") is True
+
+# hcl
+def test_hcl_empty_string_is_invalid():
+    assert is_hcl_valid("") is False
+
+
+def test_hcl_123456_is_invalid():
+    assert is_hcl_valid("123456") is False
+
+
+def test_hcl_hashtag_123456_is_invalid():
+    assert is_hcl_valid("#123456") is True
+
+
+def test_hcl_hashtag_12345g_is_invalid():
+    assert is_hcl_valid("#12345g") is False
+
+
+def test_hcl_hashtag_12345f_is_valid():
+    assert is_hcl_valid("#12345f") is True
+
+# ecl
+def test_ecl_amb_is_valid():
+    assert is_ecl_valid("amb") is True
+
+
+def test_ecl_blu_is_valid():
+    assert is_ecl_valid("blu") is True
+
+
+def test_ecl_brn_is_valid():
+    assert is_ecl_valid("brn") is True
+
+
+def test_ecl_gry_is_valid():
+    assert is_ecl_valid("gry") is True
+
+
+def test_ecl_grn_is_valid():
+    assert is_ecl_valid("grn") is True
+
+
+def test_ecl_hzl_is_valid():
+    assert is_ecl_valid("hzl") is True
+
+
+def test_ecl_oth_is_valid():
+    assert is_ecl_valid("oth") is True
+
+
+def test_ecl_other_is_invalid():
+    assert is_ecl_valid("other") is False
+
+
+def test_ecl_123_is_invalid():
+    assert is_ecl_valid("123") is False
+
+
+def test_ecl_epty_string_is_invalid():
+    assert is_ecl_valid("") is False
+
+# pid
+def test_pid_00000000_is_invalid():
+    assert is_pid_valid("00000000") is False
+
+
+def test_pid_0000000000_is_invalid():
+    assert is_pid_valid("0000000000") is False
+
+
+def test_pid_000000000_is_valid():
+    assert is_pid_valid("000000000") is True
+
+
+def test_pid_00000000A_is_invalid():
+    assert is_pid_valid("00000000A") is False
+
+
+def test_pid_12345_is_invalid():
+    assert is_pid_valid("12345") is False
+
+
+def test_pid_000012345_is_invalid():
+    assert is_pid_valid("000012345") is True
