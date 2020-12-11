@@ -20,25 +20,14 @@ def count_smelly_neighbours(map, y, x):
 
 
 def count_ugly_neighbours(map, y, x):
-    distance = 1
     neighbours = [None] * 8
+    distance = 1
+    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
     while None in neighbours:
-        if neighbours[0] is None:
-            neighbours[0] = check_seat(map, y - distance, x - distance)
-        if neighbours[1] is None:
-            neighbours[1] = check_seat(map, y - distance, x)
-        if neighbours[2] is None:
-            neighbours[2] = check_seat(map, y - distance, x + distance)
-        if neighbours[3] is None:
-            neighbours[3] = check_seat(map, y, x - distance)
-        if neighbours[4] is None:
-            neighbours[4] = check_seat(map, y, x + distance)
-        if neighbours[5] is None:
-            neighbours[5] = check_seat(map, y + distance, x - distance)
-        if neighbours[6] is None:
-            neighbours[6] = check_seat(map, y + distance, x)
-        if neighbours[7] is None:
-            neighbours[7] = check_seat(map, y + distance, x + distance)
+        for i, direction in enumerate(directions):
+            (down, right) = direction
+            if neighbours[i] is None:
+                neighbours[i] = check_seat(map, y + (down * distance), x + (right * distance))
         distance += 1
     return neighbours.count(True)
 
